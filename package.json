@@ -2,6 +2,12 @@
   "name": "@dtiemann/openclaw-instacart-browser",
   "version": "0.1.0",
   "description": "OpenClaw plugin that builds Instacart carts conversationally and stops at the review screen.",
+  "license": "MIT",
+  "author": "Dana Tiemann",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dtiemann83/openclaw-instacart-browser.git"
+  },
   "private": true,
   "type": "module",
   "main": "index.ts",

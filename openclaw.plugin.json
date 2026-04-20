@@ -25,8 +25,7 @@
       },
       "loginEmail": {
         "type": "string",
-        "description": "Instacart account email (passwordless).",
-        "default": "chef@tiemannfamily.us"
+        "description": "Instacart account email (passwordless)."
       },
       "auth": {
         "type": "object",

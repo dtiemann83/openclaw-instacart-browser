@@ -13,7 +13,7 @@ metadata:
       tools: ["browser"]
 inputs:
   - name: INSTACART_EMAIL
-    description: Login email for Instacart (passwordless). Defaults to plugin config (chef@tiemannfamily.us).
+    description: Login email for Instacart (passwordless). Falls back to plugin config `loginEmail`.
     required: false
 references:
   - auth.md

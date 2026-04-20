@@ -7,7 +7,7 @@ describe("loadConfig", () => {
   it("returns defaults for empty input", () => {
     const cfg = loadConfig({});
     expect(cfg.profile).toBe("openclaw");
-    expect(cfg.loginEmail).toBe("chef@tiemannfamily.us");
+    expect(cfg.loginEmail).toBeUndefined();
     expect(cfg.staples.minOccurrences).toBe(3);
     expect(cfg.staples.windowSize).toBe(5);
     expect(cfg.ranking.proximity).toBe(0.25);

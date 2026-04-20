@@ -25,7 +25,7 @@ const rankingSchema = z.object({
 const configSchema = z.object({
   dataDir: z.string().default("~/.openclaw/workspace/instacart-browser"),
   profile: z.string().default("openclaw"),
-  loginEmail: z.string().default("chef@tiemannfamily.us"),
+  loginEmail: z.string().optional(),
   auth: authSchema.default({}),
   staples: staplesSchema.default({}),
   ranking: rankingSchema.default({}),

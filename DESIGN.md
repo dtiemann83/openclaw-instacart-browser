@@ -25,7 +25,7 @@ Explicit non-goals:
 | Primitive | Used for | Notes |
 |---|---|---|
 | Built-in `browser` tool (CDP-attached) | All DOM interaction on instacart.com | Docs: `openclaw/docs/tools/browser.md`. The user's `~/.openclaw/openclaw.json` already declares an `openclaw` browser profile with persistent user-data at `~/.openclaw/browser-data/openclaw/` attached via CDP port 18800 (`attachOnly: true`). Instacart cookies persist there across sessions; no custom cookie code needed. |
-| Existing `resend` skill | Polling inbound login-code emails | Uses `resend.emails.receiving.list()` / `.get()`. The household mail (`chef@tiemannfamily.us`) is routed through Resend inbound. |
+| Existing `resend` skill | Polling inbound login-code emails | Uses `resend.emails.receiving.list()` / `.get()`. The configured `loginEmail` is expected to be routed through Resend inbound. |
 | OpenClaw plugin manifest | Manifest-driven install, config schema, dependency declaration | `openclaw.plugin.json` at repo root. Mirrors the layout of the user's existing `imessage-photon` plugin. |
 | OpenClaw SKILL.md format | Agent-facing instructions for *when* and *how* to drive the flow | Front-matter + markdown body, with references under `references/`. |
 | Plugin data directory | Persistent JSON (`carts.json`, `staples.json`, `preferences.json`, `sessions.json`) | Location is config-driven, default `~/.openclaw/workspace/instacart-browser/`. |
@@ -57,8 +57,7 @@ Explicit non-goals:
       },
       "loginEmail": {
         "type": "string",
-        "description": "Instacart account email (passwordless).",
-        "default": "chef@tiemannfamily.us"
+        "description": "Instacart account email (passwordless)."
       },
       "auth": {
         "type": "object",

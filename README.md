@@ -32,7 +32,7 @@ Requires the `resend` skill and the built-in `browser` tool.
         "config": {
           "dataDir": "~/.openclaw/workspace/instacart-browser",
           "profile": "openclaw",
-          "loginEmail": "chef@tiemannfamily.us",
+          "loginEmail": "you@example.com",
           "staples": { "minOccurrences": 3, "windowSize": 5 }
         }
       }

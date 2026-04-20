@@ -212,8 +212,7 @@ coverage/
       },
       "loginEmail": {
         "type": "string",
-        "description": "Instacart account email (passwordless).",
-        "default": "chef@tiemannfamily.us"
+        "description": "Instacart account email (passwordless)."
       },
       "auth": {
         "type": "object",
@@ -292,7 +291,7 @@ describe("loadConfig", () => {
   it("returns defaults for empty input", () => {
     const cfg = loadConfig({});
     expect(cfg.profile).toBe("openclaw");
-    expect(cfg.loginEmail).toBe("chef@tiemannfamily.us");
+    expect(cfg.loginEmail).toBeUndefined();
     expect(cfg.staples.minOccurrences).toBe(3);
     expect(cfg.staples.windowSize).toBe(5);
     expect(cfg.ranking.proximity).toBe(0.25);
@@ -355,7 +354,7 @@ const rankingSchema = z.object({
 const configSchema = z.object({
   dataDir: z.string().default("~/.openclaw/workspace/instacart-browser"),
   profile: z.string().default("openclaw"),
-  loginEmail: z.string().default("chef@tiemannfamily.us"),
+  loginEmail: z.string().optional(),
   auth: authSchema.default({}),
   staples: staplesSchema.default({}),
   ranking: rankingSchema.default({}),
@@ -3020,7 +3019,7 @@ metadata:
       tools: ["browser"]
 inputs:
   - name: INSTACART_EMAIL
-    description: Login email for Instacart (passwordless). Defaults to plugin config (chef@tiemannfamily.us).
+    description: Login email for Instacart (passwordless). Falls back to plugin config `loginEmail`.
     required: false
 references:
   - auth.md
@@ -3533,7 +3532,7 @@ Requires the `resend` skill and the built-in `browser` tool.
         "config": {
           "dataDir": "~/.openclaw/workspace/instacart-browser",
           "profile": "openclaw",
-          "loginEmail": "chef@tiemannfamily.us",
+          "loginEmail": "you@example.com",
           "staples": { "minOccurrences": 3, "windowSize": 5 }
         }
       }

@@ -139,6 +139,7 @@ export const sessionsFileSchema = z.object({
 export type Cart = z.infer<typeof cartSchema>;
 export type CartItem = z.infer<typeof cartItemSchema>;
 export type Staple = z.infer<typeof stapleSchema>;
+export type PendingOverride = z.infer<typeof pendingOverrideSchema>;
 export type Preferences = z.infer<typeof preferencesSchema>;
 export type PreferenceOverrides = z.infer<typeof preferenceOverridesSchema>;
 export type HistoryEntry = z.infer<typeof historyEntrySchema>;

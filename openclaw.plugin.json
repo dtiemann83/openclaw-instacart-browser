@@ -1,0 +1,62 @@
+{
+  "id": "instacart-browser",
+  "name": "Instacart Browser",
+  "description": "Build Instacart carts conversationally; stops at review — humans place orders.",
+  "version": "0.1.0",
+  "entry": "index.ts",
+  "skills": ["."],
+  "requires": {
+    "skills": ["resend"],
+    "tools": ["browser"]
+  },
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "dataDir": {
+        "type": "string",
+        "description": "Where to store carts/staples/preferences/sessions JSON.",
+        "default": "~/.openclaw/workspace/instacart-browser"
+      },
+      "profile": {
+        "type": "string",
+        "description": "Browser profile to attach to.",
+        "default": "openclaw"
+      },
+      "loginEmail": {
+        "type": "string",
+        "description": "Instacart account email (passwordless).",
+        "default": "chef@tiemannfamily.us"
+      },
+      "auth": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "senderPattern":  { "type": "string", "default": ".*@instacart\\.com$" },
+          "codeRegex":      { "type": "string", "default": "\\b(\\d{6})\\b" },
+          "timeoutMs":      { "type": "number", "default": 120000 },
+          "pollIntervalMs": { "type": "number", "default": 3000 }
+        }
+      },
+      "staples": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "minOccurrences": { "type": "number", "default": 3 },
+          "windowSize":     { "type": "number", "default": 5 },
+          "maxAgeDays":     { "type": "number" }
+        }
+      },
+      "ranking": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "proximity": { "type": "number", "default": 0.25 },
+          "history":   { "type": "number", "default": 0.35 },
+          "listMatch": { "type": "number", "default": 0.30 },
+          "windowFit": { "type": "number", "default": 0.10 }
+        }
+      }
+    }
+  }
+}

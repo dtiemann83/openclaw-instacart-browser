@@ -32,4 +32,9 @@ describe("loadConfig", () => {
   it("defaults maxAgeDays to undefined", () => {
     expect(DEFAULT_CONFIG.staples.maxAgeDays).toBeUndefined();
   });
+
+  it("DEFAULT_CONFIG matches loadConfig({}) with expanded dataDir", () => {
+    expect(DEFAULT_CONFIG.dataDir).toBe(loadConfig({}).dataDir);
+    expect(DEFAULT_CONFIG.dataDir.startsWith("~")).toBe(false);
+  });
 });

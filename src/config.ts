@@ -33,8 +33,6 @@ const configSchema = z.object({
 
 export type InstacartConfig = z.infer<typeof configSchema>;
 
-export const DEFAULT_CONFIG: InstacartConfig = configSchema.parse({});
-
 function expandHome(p: string): string {
   if (p === "~") return os.homedir();
   if (p.startsWith("~/")) return path.join(os.homedir(), p.slice(2));
@@ -45,3 +43,5 @@ export function loadConfig(raw: unknown): InstacartConfig {
   const parsed = configSchema.parse(raw ?? {});
   return { ...parsed, dataDir: expandHome(parsed.dataDir) };
 }
+
+export const DEFAULT_CONFIG: InstacartConfig = loadConfig({});

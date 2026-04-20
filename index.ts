@@ -42,9 +42,9 @@ export default definePluginEntry({
   description: "Build Instacart carts conversationally. Stops at review — humans place orders.",
   configSchema: emptyPluginConfigSchema(),
   register(api: any) {
-    const config: InstacartConfig = loadConfig(api.config ?? {});
+    const config: InstacartConfig = loadConfig(api.pluginConfig ?? {});
     const store = createMemoryStore({ dataDir: config.dataDir });
-    const resendPromise = loadResendClient(api);
+    const getResend = () => loadResendClient(api);
 
     const tool = (name: string, description: string, parameters: unknown, fn: (input: any) => Promise<unknown>) => {
       api.registerTool({
@@ -59,7 +59,7 @@ export default definePluginEntry({
     tool("instacart.resolve_login_code",
       "Poll resend inbound for an Instacart passwordless login code received after requested_after. Never logs the code.",
       ResolveLoginCodeInput,
-      async (input) => runResolveLoginCode({ resend: await resendPromise, config }, input));
+      async (input) => runResolveLoginCode({ resend: await getResend(), config }, input));
 
     tool("instacart.read_memory",
       "Read one of the plugin's persistent JSON files (carts, staples, preferences, sessions).",

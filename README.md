@@ -45,7 +45,7 @@ See `DESIGN.md` for the full schema.
 
 ## Tools
 
-`instacart.resolve_login_code`, `instacart.read_memory`, `instacart.write_memory`, `instacart.record_cart`, `instacart.rank_stores`, `instacart.detect_staples`, `instacart.update_preference`, `instacart.open_list_source`, `instacart.start_session`, `instacart.update_session`, `instacart.end_session`.
+`instacart_resolve_login_code`, `instacart_read_memory`, `instacart_write_memory`, `instacart_record_cart`, `instacart_rank_stores`, `instacart_detect_staples`, `instacart_update_preference`, `instacart_open_list_source`, `instacart_start_session`, `instacart_update_session`, `instacart_end_session`.
 
 ## What it does NOT do
 

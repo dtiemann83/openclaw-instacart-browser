@@ -56,57 +56,57 @@ export default definePluginEntry({
       });
     };
 
-    tool("instacart.resolve_login_code",
+    tool("instacart_resolve_login_code",
       "Poll resend inbound for an Instacart passwordless login code received after requested_after. Never logs the code.",
       ResolveLoginCodeInput,
       async (input) => runResolveLoginCode({ resend: await getResend(), config }, input));
 
-    tool("instacart.read_memory",
+    tool("instacart_read_memory",
       "Read one of the plugin's persistent JSON files (carts, staples, preferences, sessions).",
       ReadMemoryInput,
       async (input) => runReadMemory({ store }, input));
 
-    tool("instacart.write_memory",
+    tool("instacart_write_memory",
       "Atomically write a persistent JSON file. Preferences support merge=true.",
       WriteMemoryInput,
       async (input) => runWriteMemory({ store }, input));
 
-    tool("instacart.record_cart",
+    tool("instacart_record_cart",
       "Append a finalized Cart to carts.json and recompute staples.json.",
       RecordCartInput,
       async (input) => runRecordCart({ store, config }, input));
 
-    tool("instacart.rank_stores",
+    tool("instacart_rank_stores",
       "Rank candidate stores by proximity, history, list match, and window fit (weights from config).",
       RankStoresInput,
       async (input) => runRankStores({ store, config }, input));
 
-    tool("instacart.detect_staples",
+    tool("instacart_detect_staples",
       "Recompute staples.json from carts.json using thresholds from config.",
       DetectStaplesInput,
       async (input) => runDetectStaples({ store, config }, input));
 
-    tool("instacart.update_preference",
+    tool("instacart_update_preference",
       "Record a preference override (pending) or promote one (one_shot_confirm / manual).",
       UpdatePreferenceInput,
       async (input) => runUpdatePreference({ store }, input));
 
-    tool("instacart.open_list_source",
+    tool("instacart_open_list_source",
       "Open a list source (adhoc | staples | repeat | recipes-stub) and return normalized items.",
       OpenListSourceInput,
       async (input) => runOpenListSource({ store }, input));
 
-    tool("instacart.start_session",
+    tool("instacart_start_session",
       "Create sessions.json.current, rotating a stale current into recent[] if needed.",
       StartSessionInput,
       async (input) => runStartSession({ store }, input));
 
-    tool("instacart.update_session",
+    tool("instacart_update_session",
       "Merge a patch into sessions.json.current and bump last_updated.",
       UpdateSessionInput,
       async (input) => runUpdateSession({ store }, input));
 
-    tool("instacart.end_session",
+    tool("instacart_end_session",
       "Rotate current into recent[] with the given terminal status (handed_off | abandoned).",
       EndSessionInput,
       async (input) => runEndSession({ store }, input));

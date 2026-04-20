@@ -43,8 +43,8 @@ Template:
 After presenting:
 
 ```
-instacart.record_cart({ cart: <extracted snapshot> })
-instacart.end_session({ status: "handed_off" })
+instacart_record_cart({ cart: <extracted snapshot> })
+instacart_end_session({ status: "handed_off" })
 ```
 
 ## What NOT to do

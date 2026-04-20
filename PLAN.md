@@ -2199,7 +2199,7 @@ git commit -m "parsers: cart-review DOM extractor with fixture-based canary test
 
 ---
 
-## Task 14: Tool — `instacart.resolve_login_code`
+## Task 14: Tool — `instacart_resolve_login_code`
 
 **Files:**
 - Create: `src/tools/resolve_login_code.ts`
@@ -2249,7 +2249,7 @@ git commit -m "tools: resolve_login_code wrapper with typebox input schema"
 
 ---
 
-## Task 15: Tool — `instacart.read_memory`
+## Task 15: Tool — `instacart_read_memory`
 
 **Files:**
 - Create: `src/tools/read_memory.ts`
@@ -2294,7 +2294,7 @@ git commit -m "tools: read_memory with kind discriminator"
 
 ---
 
-## Task 16: Tool — `instacart.write_memory`
+## Task 16: Tool — `instacart_write_memory`
 
 **Files:**
 - Create: `src/tools/write_memory.ts`
@@ -2366,7 +2366,7 @@ git commit -m "tools: write_memory with zod validation per kind + preferences me
 
 ---
 
-## Task 17: Tool — `instacart.record_cart`
+## Task 17: Tool — `instacart_record_cart`
 
 **Files:**
 - Create: `src/tools/record_cart.ts`
@@ -2423,7 +2423,7 @@ git commit -m "tools: record_cart appends then recomputes staples"
 
 ---
 
-## Task 18: Tool — `instacart.rank_stores`
+## Task 18: Tool — `instacart_rank_stores`
 
 **Files:**
 - Create: `src/tools/rank_stores.ts`
@@ -2478,7 +2478,7 @@ git commit -m "tools: rank_stores reading prefs + history"
 
 ---
 
-## Task 19: Tool — `instacart.detect_staples`
+## Task 19: Tool — `instacart_detect_staples`
 
 **Files:**
 - Create: `src/tools/detect_staples.ts`
@@ -2532,7 +2532,7 @@ git commit -m "tools: detect_staples with force + change detection"
 
 ---
 
-## Task 20: Tool — `instacart.update_preference`
+## Task 20: Tool — `instacart_update_preference`
 
 **Files:**
 - Create: `src/tools/update_preference.ts`
@@ -2593,7 +2593,7 @@ git commit -m "tools: update_preference with pending/one_shot_confirm/manual bra
 
 ---
 
-## Task 21: Tool — `instacart.open_list_source`
+## Task 21: Tool — `instacart_open_list_source`
 
 **Files:**
 - Create: `src/tools/open_list_source.ts`
@@ -2922,57 +2922,57 @@ export default definePluginEntry({
       });
     };
 
-    tool("instacart.resolve_login_code",
+    tool("instacart_resolve_login_code",
       "Poll resend inbound for an Instacart passwordless login code received after requested_after. Never logs the code.",
       ResolveLoginCodeInput,
       async (input) => runResolveLoginCode({ resend: await resendPromise, config }, input));
 
-    tool("instacart.read_memory",
+    tool("instacart_read_memory",
       "Read one of the plugin's persistent JSON files (carts, staples, preferences, sessions).",
       ReadMemoryInput,
       async (input) => runReadMemory({ store }, input));
 
-    tool("instacart.write_memory",
+    tool("instacart_write_memory",
       "Atomically write a persistent JSON file. Preferences support merge=true.",
       WriteMemoryInput,
       async (input) => runWriteMemory({ store }, input));
 
-    tool("instacart.record_cart",
+    tool("instacart_record_cart",
       "Append a finalized Cart to carts.json and recompute staples.json.",
       RecordCartInput,
       async (input) => runRecordCart({ store, config }, input));
 
-    tool("instacart.rank_stores",
+    tool("instacart_rank_stores",
       "Rank candidate stores by proximity, history, list match, and window fit (weights from config).",
       RankStoresInput,
       async (input) => runRankStores({ store, config }, input));
 
-    tool("instacart.detect_staples",
+    tool("instacart_detect_staples",
       "Recompute staples.json from carts.json using thresholds from config.",
       DetectStaplesInput,
       async (input) => runDetectStaples({ store, config }, input));
 
-    tool("instacart.update_preference",
+    tool("instacart_update_preference",
       "Record a preference override (pending) or promote one (one_shot_confirm / manual).",
       UpdatePreferenceInput,
       async (input) => runUpdatePreference({ store }, input));
 
-    tool("instacart.open_list_source",
+    tool("instacart_open_list_source",
       "Open a list source (adhoc | staples | repeat | recipes-stub) and return normalized items.",
       OpenListSourceInput,
       async (input) => runOpenListSource({ store }, input));
 
-    tool("instacart.start_session",
+    tool("instacart_start_session",
       "Create sessions.json.current, rotating a stale current into recent[] if needed.",
       StartSessionInput,
       async (input) => runStartSession({ store }, input));
 
-    tool("instacart.update_session",
+    tool("instacart_update_session",
       "Merge a patch into sessions.json.current and bump last_updated.",
       UpdateSessionInput,
       async (input) => runUpdateSession({ store }, input));
 
-    tool("instacart.end_session",
+    tool("instacart_end_session",
       "Rotate current into recent[] with the given terminal status (handed_off | abandoned).",
       EndSessionInput,
       async (input) => runEndSession({ store }, input));
@@ -3047,17 +3047,17 @@ The user says things like:
 
 ## Flow
 
-1. **Decide the list source.** Classify the user's intent → one of `adhoc | staples | repeat | recipes`. Call `instacart.open_list_source({ kind, args? })`.
+1. **Decide the list source.** Classify the user's intent → one of `adhoc | staples | repeat | recipes`. Call `instacart_open_list_source({ kind, args? })`.
 
 2. **Session probe.** Use the `browser` tool to navigate to `https://www.instacart.com`. Check for the logged-in indicator (see `auth.md`). If logged in, continue. If not, go to step 3.
 
-3. **Auth.** Capture the current ISO timestamp as `requested_after`. Use `browser` to enter the configured email and request a code. Then call `instacart.resolve_login_code({ requested_after })`. Enter the returned code. Re-probe login state. If captcha — **halt and tell the user**.
+3. **Auth.** Capture the current ISO timestamp as `requested_after`. Use `browser` to enter the configured email and request a code. Then call `instacart_resolve_login_code({ requested_after })`. Enter the returned code. Re-probe login state. If captcha — **halt and tell the user**.
 
-4. **Store selection.** If the user asked to compare stores, call `instacart.rank_stores` with the candidates the page exposes. Otherwise use the last-used store (from `instacart.read_memory({ kind: "carts" })`'s most recent entry).
+4. **Store selection.** If the user asked to compare stores, call `instacart_rank_stores` with the candidates the page exposes. Otherwise use the last-used store (from `instacart_read_memory({ kind: "carts" })`'s most recent entry).
 
-5. **Session start.** Call `instacart.start_session({ list_source, list_source_ref? })`.
+5. **Session start.** Call `instacart_start_session({ list_source, list_source_ref? })`.
 
-6. **Cart building.** For each list item, search in Instacart, apply user preferences, and add. On overrides (different brand/size than preference), call `instacart.update_preference({ field, key, from, to, reason: "pending" | "one_shot_confirm" | "manual" })`. After each material change, call `instacart.update_session({ patch: { cart: [...] } })`.
+6. **Cart building.** For each list item, search in Instacart, apply user preferences, and add. On overrides (different brand/size than preference), call `instacart_update_preference({ field, key, from, to, reason: "pending" | "one_shot_confirm" | "manual" })`. After each material change, call `instacart_update_session({ patch: { cart: [...] } })`.
 
 7. **Fulfillment.** Set delivery or pickup; pick a window. See `fulfillment.md`.
 
@@ -3067,12 +3067,12 @@ The user says things like:
 
    **Never click Place Order. Never call a tool to place an order — there is none.**
 
-9. **Record.** Call `instacart.record_cart({ cart })` with the extracted state, then `instacart.end_session({ status: "handed_off" })`.
+9. **Record.** Call `instacart_record_cart({ cart })` with the extracted state, then `instacart_end_session({ status: "handed_off" })`.
 
 ## Key rules
 
 - **No Place Order path.** There is no tool, instruction, or helper in this skill that places the order. If asked, respond: *"I don't place orders — you do, in Instacart."*
-- **Resume within 24 hours.** Before starting fresh, call `instacart.read_memory({ kind: "sessions" })`. If `current` exists and `last_updated` is within 24 hours, offer to resume.
+- **Resume within 24 hours.** Before starting fresh, call `instacart_read_memory({ kind: "sessions" })`. If `current` exists and `last_updated` is within 24 hours, offer to resume.
 - **Preference evolution is explicit.** One-shot changes use `reason: "one_shot_confirm"` or `"manual"`. Record-only overrides use `reason: "pending"` and are auto-promoted after 2 consecutive agreeing overrides.
 - **Never log the login code.** Don't echo it in any message, tool log, or reply.
 - **Captcha halts.** If a captcha or challenge appears, stop and tell the user.
@@ -3122,7 +3122,7 @@ If none match after the page is loaded, treat as **not logged in**.
 
 1. Capture `requested_after = new Date().toISOString()` **before** clicking Continue.
 2. Click Continue/send-code.
-3. Call `instacart.resolve_login_code({ requested_after })`.
+3. Call `instacart_resolve_login_code({ requested_after })`.
 4. If `error === "timeout"`: try once more (click "resend code"), recapture `requested_after`, retry.
 5. If the response returns a code, type it into the code field and submit.
 6. Re-probe the logged-in indicator.
@@ -3186,7 +3186,7 @@ git commit -m "references/auth.md: selector ladders and retry policy"
 - "Use current location" requires OS permission — skip it and type the saved address.
 - If the Instacart account has multiple addresses, prefer the one matching configured delivery (not in config yet — ask user once and stash as a preference override with `reason: "manual"`).
 
-## Calling `instacart.rank_stores`
+## Calling `instacart_rank_stores`
 
 Pass the extracted candidates + current list keys (if known) + user preferences. Example:
 
@@ -3257,7 +3257,7 @@ If the card shows an OOS indicator or offers a substitution:
 When the user picks something different from the preference:
 
 ```
-instacart.update_preference({
+instacart_update_preference({
   field: "brand",
   key: "<normalized item key>",
   from: "<previous pref>",
@@ -3314,7 +3314,7 @@ git commit -m "references/cart.md: search, disambiguation, OOS/sub handling, ove
 After confirming a window:
 
 ```
-instacart.update_session({
+instacart_update_session({
   patch: {
     fulfillment: {
       type: "delivery" | "pickup",
@@ -3395,8 +3395,8 @@ Template:
 After presenting:
 
 ```
-instacart.record_cart({ cart: <extracted snapshot> })
-instacart.end_session({ status: "handed_off" })
+instacart_record_cart({ cart: <extracted snapshot> })
+instacart_end_session({ status: "handed_off" })
 ```
 
 ## What NOT to do
@@ -3545,7 +3545,7 @@ See `DESIGN.md` for the full schema.
 
 ## Tools
 
-`instacart.resolve_login_code`, `instacart.read_memory`, `instacart.write_memory`, `instacart.record_cart`, `instacart.rank_stores`, `instacart.detect_staples`, `instacart.update_preference`, `instacart.open_list_source`, `instacart.start_session`, `instacart.update_session`, `instacart.end_session`.
+`instacart_resolve_login_code`, `instacart_read_memory`, `instacart_write_memory`, `instacart_record_cart`, `instacart_rank_stores`, `instacart_detect_staples`, `instacart_update_preference`, `instacart_open_list_source`, `instacart_start_session`, `instacart_update_session`, `instacart_end_session`.
 
 ## What it does NOT do
 
@@ -3608,7 +3608,7 @@ Run: `ls -la ~/.openclaw/workspace/instacart-browser/` (directory may not exist 
 
 - [ ] **Step 7: Smoke-call one tool**
 
-Run the CLI agent with a prompt like: *"Use instacart.read_memory to show me my staples."*
+Run the CLI agent with a prompt like: *"Use instacart_read_memory to show me my staples."*
 
 Expected: returns `{ data: { staples: [], computed_at: "...", normalizer_version: "0", config: {} } }` (empty default).
 

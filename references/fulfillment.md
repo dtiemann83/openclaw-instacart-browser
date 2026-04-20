@@ -16,7 +16,7 @@
 After confirming a window:
 
 ```
-instacart.update_session({
+instacart_update_session({
   patch: {
     fulfillment: {
       type: "delivery" | "pickup",

@@ -22,7 +22,7 @@ If none match after the page is loaded, treat as **not logged in**.
 
 1. Capture `requested_after = new Date().toISOString()` **before** clicking Continue.
 2. Click Continue/send-code.
-3. Call `instacart.resolve_login_code({ requested_after })`.
+3. Call `instacart_resolve_login_code({ requested_after })`.
 4. If `error === "timeout"`: try once more (click "resend code"), recapture `requested_after`, retry.
 5. If the response returns a code, type it into the code field and submit.
 6. Re-probe the logged-in indicator.

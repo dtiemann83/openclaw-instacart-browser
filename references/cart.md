@@ -35,7 +35,7 @@ If the card shows an OOS indicator or offers a substitution:
 When the user picks something different from the preference:
 
 ```
-instacart.update_preference({
+instacart_update_preference({
   field: "brand",
   key: "<normalized item key>",
   from: "<previous pref>",

@@ -22,7 +22,7 @@
 - "Use current location" requires OS permission — skip it and type the saved address.
 - If the Instacart account has multiple addresses, prefer the one matching configured delivery (not in config yet — ask user once and stash as a preference override with `reason: "manual"`).
 
-## Calling `instacart.rank_stores`
+## Calling `instacart_rank_stores`
 
 Pass the extracted candidates + current list keys (if known) + user preferences. Example:
 

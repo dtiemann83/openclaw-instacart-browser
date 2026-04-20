@@ -313,17 +313,17 @@ Each tool has zod-validated input/output. The agent calls tools; tools never tou
 
 | Tool | Input | Output | Purpose |
 |---|---|---|---|
-| `instacart.resolve_login_code` | `{ requested_after: ISO, timeout_ms? }` | `{ code, received_at }` or `{ error: "timeout" \| "not_found" }` | Polls resend inbound matching `auth.senderPattern`, extracts first match of `auth.codeRegex` from plaintext, only accepts mail received after `requested_after`. Never logs the code. |
-| `instacart.read_memory` | `{ kind: "carts"\|"staples"\|"preferences"\|"sessions" }` | `{ data }` | Validated read. |
-| `instacart.write_memory` | `{ kind, data, merge?: boolean }` | `{ ok: true }` | Atomic write. Preferences merge by default. |
-| `instacart.record_cart` | `{ cart: Cart }` | `{ ok: true, staples_recomputed: boolean }` | Append to `carts.json`, then recompute `staples.json`. |
-| `instacart.rank_stores` | `{ candidates, list?, prefs? }` | `{ ranked, rationale }` | Weighted scoring (weights from config). |
-| `instacart.detect_staples` | `{ force?: boolean }` | `{ staples, changed: boolean }` | Recompute from carts + current normalizer version. |
-| `instacart.update_preference` | `{ field, key, from?, to, reason }` | `{ ok, promoted }` | Record pending override or promote per evolution rule. |
-| `instacart.open_list_source` | `{ kind, args? }` | `{ items, origin }` | Delegate to listsource; for `adhoc`, applies preferences; for `repeat`, loads a cart by `cart_id` or `"last"`. |
-| `instacart.start_session` | `{ list_source, list_source_ref? }` | `{ session_id }` | Create `sessions.json.current`. |
-| `instacart.update_session` | `{ patch }` | `{ ok }` | Merge patch into `current`. |
-| `instacart.end_session` | `{ status: "handed_off" \| "abandoned" }` | `{ ok }` | Rotate `current` into `recent[]`, clear `current`. |
+| `instacart_resolve_login_code` | `{ requested_after: ISO, timeout_ms? }` | `{ code, received_at }` or `{ error: "timeout" \| "not_found" }` | Polls resend inbound matching `auth.senderPattern`, extracts first match of `auth.codeRegex` from plaintext, only accepts mail received after `requested_after`. Never logs the code. |
+| `instacart_read_memory` | `{ kind: "carts"\|"staples"\|"preferences"\|"sessions" }` | `{ data }` | Validated read. |
+| `instacart_write_memory` | `{ kind, data, merge?: boolean }` | `{ ok: true }` | Atomic write. Preferences merge by default. |
+| `instacart_record_cart` | `{ cart: Cart }` | `{ ok: true, staples_recomputed: boolean }` | Append to `carts.json`, then recompute `staples.json`. |
+| `instacart_rank_stores` | `{ candidates, list?, prefs? }` | `{ ranked, rationale }` | Weighted scoring (weights from config). |
+| `instacart_detect_staples` | `{ force?: boolean }` | `{ staples, changed: boolean }` | Recompute from carts + current normalizer version. |
+| `instacart_update_preference` | `{ field, key, from?, to, reason }` | `{ ok, promoted }` | Record pending override or promote per evolution rule. |
+| `instacart_open_list_source` | `{ kind, args? }` | `{ items, origin }` | Delegate to listsource; for `adhoc`, applies preferences; for `repeat`, loads a cart by `cart_id` or `"last"`. |
+| `instacart_start_session` | `{ list_source, list_source_ref? }` | `{ session_id }` | Create `sessions.json.current`. |
+| `instacart_update_session` | `{ patch }` | `{ ok }` | Merge patch into `current`. |
+| `instacart_end_session` | `{ status: "handed_off" \| "abandoned" }` | `{ ok }` | Rotate `current` into `recent[]`, clear `current`. |
 
 **Intentionally NOT tools:** `add_item`, `set_fulfillment`, `list_windows`, `place_order`. Those are browser actions performed by the agent, guided by SKILL.md. `place_order` in particular has no tool AND no instruction in SKILL.md.
 
@@ -365,14 +365,14 @@ references:
 
 The SKILL.md body is deliberately terse — detail goes in `references/*.md`.
 
-1. **Decide the list source** — `adhoc` / `staples` / `repeat`. Call `instacart.open_list_source`.
+1. **Decide the list source** — `adhoc` / `staples` / `repeat`. Call `instacart_open_list_source`.
 2. **Session probe.** Navigate to `instacart.com`; check logged-in indicator. If not → `auth.md`.
-3. **Auth flow** — record `requested_after`, request code, call `instacart.resolve_login_code`, submit.
-4. **Store selection** — if user asked to compare, call `instacart.rank_stores`. Otherwise use last-used store.
-5. **Cart building** — for each item, search + apply preferences; on override, call `instacart.update_preference`. Persist via `instacart.update_session`.
+3. **Auth flow** — record `requested_after`, request code, call `instacart_resolve_login_code`, submit.
+4. **Store selection** — if user asked to compare, call `instacart_rank_stores`. Otherwise use last-used store.
+5. **Cart building** — for each item, search + apply preferences; on override, call `instacart_update_preference`. Persist via `instacart_update_session`.
 6. **Fulfillment** — set type, pick window. See `fulfillment.md`.
 7. **Review — stop here.** Extract cart state. Present to user. Say: *"Cart is ready. Review and place it yourself on Instacart."* **Never** click Place Order.
-8. **Record** — call `instacart.record_cart`, then `instacart.end_session({ status: "handed_off" })`.
+8. **Record** — call `instacart_record_cart`, then `instacart_end_session({ status: "handed_off" })`.
 
 ### References
 
